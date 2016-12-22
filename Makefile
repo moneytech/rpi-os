@@ -17,6 +17,8 @@ BOOTFLAGS=$(CPU) -fpic -ffreestanding -c $(BOOTIN) -o $(BOOTOUT)
 # KERNEL instructions source and output
 KERNIN=$(SRC)/kernel.c
 KERNOUT=$(BIN)/kernel.o
+DEBUG=$(BIN)/kernel.s
+DFLAGS=$(CPU) -fpic -ffreestanding -std=gnu99 -c $(KERNIN) -S -o $(DEBUG)
 KFLAG2=-O2 -Wall -Wextra
 KFLAG1=$(CPU) -fpic -ffreestanding -std=gnu99 -c $(KERNIN) -o $(KERNOUT) $(KFLAG2)
 
@@ -46,9 +48,12 @@ compile_v1:
 	cp $(LINKOUT) $(BOOT) 
 	cp $(BINOUT) $(BOOT)
 
+debug:
+	$(CC) $(DFLAGS)
+
 # clean compiled files out of directories
 clean:
-	rm -rf $(BIN)/* $(BOOT)/$(LINKOUT) $(BOOT)/$(BINOUT)
+	rm -rf $(BIN)/* $(BOOT)/$(LINKOUT) $(BOOT)/$(BINOUT) $(DEBUG)
 
 # Execute the run shell script
 run:

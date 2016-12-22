@@ -1,3 +1,4 @@
 *.o
 pi_os.elf
 pi_os.bin
+*.s
